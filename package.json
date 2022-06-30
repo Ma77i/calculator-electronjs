@@ -2,9 +2,10 @@
   "name": "calculator-electron",
   "version": "1.0.0",
   "description": "A simple calculator build with electronjs",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "electron src/app.js",
+    "start": "electron .",
+    "dev": "electron . --debug",
     "test": "test"
   },
   "repository": {
@@ -19,5 +20,8 @@
   "homepage": "https://github.com/Ma77i/calculator-electronjs#readme",
   "dependencies": {
     "electron": "^19.0.6"
+  },
+  "devDependencies": {
+    "devtron": "^1.4.0"
   }
 }

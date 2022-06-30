@@ -3,10 +3,12 @@ const { app, BrowserWindow, Menu } = require("electron");
 const URL = require("url");
 const path = require("path");
 
+const debug = /--debug/.test(process.argv[2])
+
 let mainWindow;
 
-app.on("ready", () => {
-  mainWindow = new BrowserWindow({
+const createWindow = () => {
+  const windowOptions = {
     width: 500,
     height: 550,
     webPreferences: {
@@ -16,7 +18,9 @@ app.on("ready", () => {
     // resizable: false,
     // icon: path.join(__dirname, "assets/icons/png/64x64.png"),
     title: "Calculator Electron",
-  });
+  }
+
+  mainWindow = new BrowserWindow(windowOptions);
   mainWindow.loadURL(
     URL.format({
       pathname: path.join(__dirname, "views/index.html"),
@@ -29,9 +33,21 @@ app.on("ready", () => {
   // y lo asignamos a nuestro navegador
   Menu.setApplicationMenu(mainMenu);
   // cerramos todas las ventanas cuando el usuario cierra la aplicacion
+
+  // Launch fullscreen with DevTools open, usage: npm run debug
+  if (debug) {
+    mainWindow.webContents.openDevTools()
+    mainWindow.maximize()
+    require('devtron').install()
+  }
+
   mainWindow.on("closed", () => {
     app.quit();
   });
+}
+
+app.on("ready", () => {
+  createWindow();
 });
 
 const templateMenu = [
