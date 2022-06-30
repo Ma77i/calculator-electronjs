@@ -1,0 +1,33 @@
+span {
+    font-family: 'Rajdhani', sans-serif!important;
+    font-size: 1.8rem;
+    font-weight: bold;
+    /* -webkit-text-stroke-width: 0.1px;
+    -webkit-text-stroke-color: rgb(83, 81, 81); */
+    text-shadow: 0 0 6px #000;
+}
+
+#screen {
+    font-family: 'Rajdhani', sans-serif!important;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-shadow: 0 0 3px #000;
+    background: rgba( 255, 255, 255, 0.2 );
+}
+
+.key:hover {
+    cursor: pointer;
+    background: rgba( 255, 255, 255, 0.2 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 20px );
+    -webkit-backdrop-filter: blur( 20px );
+    text-shadow: 0 0 3px #000;
+}
+
+.key:active {
+    border-radius: 50px;
+    background: rgba( 255, 255, 255, 0.2 );
+    box-shadow: inset 20px 20px 60px rgba( 255, 255, 255, 0.5 ),
+                inset -20px -20px 60px rgba( 255, 255, 255, 0.5 );
+}
+

@@ -1,0 +1,23 @@
+{
+  "name": "calculator-electron",
+  "version": "1.0.0",
+  "description": "A simple calculator build with electronjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron src/app.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ma77i/calculator-electronjs.git"
+  },
+  "author": "Matias Silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ma77i/calculator-electronjs/issues"
+  },
+  "homepage": "https://github.com/Ma77i/calculator-electronjs#readme",
+  "dependencies": {
+    "electron": "^19.0.6"
+  }
+}
