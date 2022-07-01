@@ -1,24 +1,22 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, shell } = require("electron");
 
 const URL = require("url");
 const path = require("path");
-
-const debug = /--debug/.test(process.argv[2])
 
 let mainWindow;
 
 const createWindow = () => {
   const windowOptions = {
     width: 500,
-    height: 550,
+    height: 600,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
     },
-    // resizable: false,
-    // icon: path.join(__dirname, "assets/icons/png/64x64.png"),
+    resizable: false,
+    icon: path.join(__dirname, "./pic.png"),
     title: "Calculator Electron",
-  }
+  };
 
   mainWindow = new BrowserWindow(windowOptions);
   mainWindow.loadURL(
@@ -28,23 +26,15 @@ const createWindow = () => {
       slashes: true,
     })
   );
-  // creamos una variable para guardar el menu creado desde un template
+
   const mainMenu = Menu.buildFromTemplate(templateMenu);
   // y lo asignamos a nuestro navegador
   Menu.setApplicationMenu(mainMenu);
-  // cerramos todas las ventanas cuando el usuario cierra la aplicacion
-
-  // Launch fullscreen with DevTools open, usage: npm run debug
-  if (debug) {
-    mainWindow.webContents.openDevTools()
-    mainWindow.maximize()
-    require('devtron').install()
-  }
 
   mainWindow.on("closed", () => {
     app.quit();
   });
-}
+};
 
 app.on("ready", () => {
   createWindow();
@@ -52,69 +42,64 @@ app.on("ready", () => {
 
 const templateMenu = [
   {
-    label: "File",
+    label: "Edit",
     submenu: [
       {
-        label: "Quit",
-        accelerator: process.platform === "darwin" ? "Command+Q" : "Ctrl+Q",
-        onclick: () => {
-          app.quit();
+        label: "Toggle DevTools",
+        accelerator: process.platform === "darwin" ? "Cmd + D" : "Ctrl + D",
+        click: (item, focusedWindow) => {
+          focusedWindow.toggleDevTools();
         },
       },
     ],
   },
   {
-    label: "Edit",
-    submenu: [
-      {
-        label: "Undo",
-        accelerator: "CmdOrCtrl+Z",
-        role: "undo",
-      },
-      {
-        label: "Redo",
-        accelerator: "Shift+CmdOrCtrl+Z",
-        role: "redo",
-      },
-    ]
-  },
-  {
-    label: "Help",
-    submenu: [
-      {
-        label: "About",
-        click: () => {
-          console.log("About");
-        }
-      },
-      {
-        label: "Contact",
-        click: () => {
-          console.log("Contact");
-        }
-      }
-    ]
-  }
-];
-
-if (process.env.NODE_ENV !== "production") {
-  templateMenu.push({
-    label: "DevTools",
+    label: "Window",
+    role: "window",
     submenu: [
       {
         label: "Reload",
-        accelerator: "Ctrl + R",
+        accelerator: process.platform === "darwin" ? "Cmd + R" : "Ctrl + R",
         click: () => {
           mainWindow.reload();
-        }
+        },
       },
       {
-        label: "Toggle DevTools",
-        accelerator: "Ctrl + D",
-        click: (item, focusedWindow) => {
-          focusedWindow.toggleDevTools();
-        }
-      }
-    ]
-  })
-}
+        label: "Minimize",
+        accelerator: "CmdOrCtrl+M",
+        role: "minimize",
+      },
+      {
+        label: "Close",
+        accelerator: "CmdOrCtrl+W",
+        role: "close",
+      },
+      {
+        type: "separator",
+      },
+      {
+        label: "Reopen Window",
+        accelerator: "CmdOrCtrl+Shift+T",
+        enabled: false,
+        key: "reopenMenuItem",
+        click: () => {
+          app.emit("activate");
+        },
+      },
+    ],
+  },
+  {
+    label: "Help",
+    role: "help",
+    submenu: [
+      {
+        label: "Visit GitHub repository",
+        click: () => {
+          shell.openExternal(
+            "http://www.github.com/Ma77i/calculator-electronjs"
+          );
+        },
+      },
+    ],
+  },
+];

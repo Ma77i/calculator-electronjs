@@ -1,6 +1,6 @@
 let screen = document.getElementById('screen');
 let keys = Array.from(document.querySelectorAll('.key'));
-console.log(keys)
+
 keys.forEach(key => {
   key.addEventListener('click', () => {
     let value = key.innerText;
